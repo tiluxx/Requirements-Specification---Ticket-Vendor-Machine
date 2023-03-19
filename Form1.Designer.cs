@@ -104,6 +104,7 @@ namespace Search_Destination__TVM_
             this.resultGrd.RowTemplate.Height = 24;
             this.resultGrd.Size = new System.Drawing.Size(996, 265);
             this.resultGrd.TabIndex = 0;
+            this.resultGrd.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.resultGrd_RowHeaderMouseClick);
             // 
             // SearchDestinationForm
             // 

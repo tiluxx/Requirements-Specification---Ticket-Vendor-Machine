@@ -16,6 +16,7 @@ namespace Search_Destination__TVM_
         SqlConnection cn;
         SqlDataAdapter data;
         DataTable resTable;
+        public static string curTripId;
 
         public SearchDestinationForm()
         {
@@ -54,7 +55,7 @@ namespace Search_Destination__TVM_
                 MessageBox.Show("You have to enter your destination!", "Warning");
             } else
             {
-                string sql = "select D.destiantionName as Destination, Trans.transportType as Transport, Trans.transportNumber as 'Vehicle No.', T.price as Price, T.startTime as 'Start Time', T.endTime as 'End time', (select D1.destiantionName from Destination D1 where D1.destinationId = T.pickupLocationId) as 'Pick-up location'" +
+                string sql = "select T.tripId as ID, D.destiantionName as Destination, Trans.transportType as Transport, Trans.transportNumber as 'Vehicle No.', T.price as Price, T.startTime as 'Start Time', T.endTime as 'End time', (select D1.destiantionName from Destination D1 where D1.destinationId = T.pickupLocationId) as 'Pick-up location'" +
                             " from Trip T, Destination D, Transport Trans" +
                             " where(D.destiantionName like N'%" + inputLocation + "%' or D.detailAddress like N'%" + inputLocation + "%')" +
                                     " and D.destinationId = T.destinationId" +
@@ -62,6 +63,13 @@ namespace Search_Destination__TVM_
                                     " and T.condition = 'available'";
                 showGRD(sql);
             }
+        }
+
+        private void resultGrd_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            SelectTripForm selectTripForm = new SelectTripForm();
+            curTripId = resultGrd.CurrentRow.Cells[0].Value.ToString();
+            selectTripForm.Show();
         }
     }
 }
