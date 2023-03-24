@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace Search_Destination__TVM_
         SqlDataAdapter data;
         DataTable resTable;
 
+        String strConn = ConfigurationManager.ConnectionStrings["MyConn"].ConnectionString;
         public SelectTripForm()
         {
             InitializeComponent();
@@ -24,11 +26,10 @@ namespace Search_Destination__TVM_
 
         private void SelectTripForm_Load(object sender, EventArgs e)
         {
-            string selectedTripId = SearchDestinationForm.curTripId;
-
-            string s = "initial catalog = Trips_Manage; data source = DESKTOP-LESN61O; integrated security = true;";
-            cn = new SqlConnection(s);
+            cn = new SqlConnection(strConn);
             cn.Open();
+
+            string selectedTripId = SearchDestinationForm.curTripId;
 
             string sql = "select T.tripId as ID, D.destiantionName as Destination, Trans.transportType as Transport, Trans.transportNumber as 'Vehicle No.', T.price as Price, T.startTime as 'Start Time', T.endTime as 'End time', (select D1.destiantionName from Destination D1 where D1.destinationId = T.pickupLocationId) as 'Pick-up location'" +
                             " from Trip T, Destination D, Transport Trans" +

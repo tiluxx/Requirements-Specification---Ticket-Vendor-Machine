@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -18,6 +19,8 @@ namespace Search_Destination__TVM_
         DataTable resTable;
         public static string curTripId;
 
+        String strConn = ConfigurationManager.ConnectionStrings["MyConn"].ConnectionString;
+
         public SearchDestinationForm()
         {
             InitializeComponent();
@@ -25,8 +28,7 @@ namespace Search_Destination__TVM_
 
         private void SearchDestinationForm_Load(object sender, EventArgs e)
         {
-            string s = "initial catalog = Trips_Manage; data source = DESKTOP-LESN61O; integrated security = true;";
-            cn = new SqlConnection(s);
+            cn = new SqlConnection(strConn);
             cn.Open();
         }
 
